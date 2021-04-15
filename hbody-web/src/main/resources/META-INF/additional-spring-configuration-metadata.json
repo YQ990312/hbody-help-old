@@ -1,0 +1,13 @@
+{
+  "properties": [
+    {
+      "name": "spring.datasource.druid.test-while-return",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.druid.test-while-return."
+    },
+    {
+      "name": "spring.datasource.druid.maximum-pool-size",
+      "type": "java.lang.String",
+      "description": "Description for spring.datasource.druid.maximum-pool-size."
+    }
+  ] }
