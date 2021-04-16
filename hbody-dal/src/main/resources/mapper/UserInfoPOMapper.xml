@@ -1,4 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.indata.service.dal.dao.UserInfoPOMapper">
+    <resultMap id="BaseResultMap" type="com.indata.service.dal.entity.UserInfoPO">
+        <id column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="user_school_id" jdbcType="INTEGER" property="userSchoolId"/>
+        <result column="user_real_name" jdbcType="VARCHAR" property="userRealName"/>
+        <result column="user_nick_name" jdbcType="VARCHAR" property="userNickName"/>
+        <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+        <result column="user_gender" jdbcType="INTEGER" property="userGender"/>
+        <result column="user_delivery_address" jdbcType="VARCHAR" property="userDeliveryAddress"/>
+        <result column="user_avatar_url" jdbcType="VARCHAR" property="userAvatarUrl"/>
+        <result column="user_mobile" jdbcType="VARCHAR" property="userMobile"/>
+        <result column="user_backlist" jdbcType="BOOLEAN" property="userBacklist"/>
+        <result column="user_role" jdbcType="INTEGER" property="userRole"/>
+        <result column="user_jurisdiction" jdbcType="INTEGER" property="userJurisdiction"/>
+        <result column="user_regulate_school" jdbcType="INTEGER" property="userRegulateSchool"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        user_id,user_school_id,user_real_name,user_nick_name,user_password,user_gender,
+        user_delivery_address,user_avatar_url,user_mobile,user_backlist,user_role,
+        user_jurisdiction,user_regulate_school,gmt_create,gmt_modified
+    </sql>
+
+    <insert id="insert" parameterType="com.indata.service.dal.entity.UserInfoPO">
+        <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userSchoolId != null">
+                user_school_id,
+            </if>
+            <if test="userRealName != null">
+                user_real_name,
+            </if>
+            <if test="userNickName != null">
+                user_nick_name,
+            </if>
+            <if test="userPassword != null">
+                user_password,
+            </if>
+            <if test="userGender != null">
+                user_gender,
+            </if>
+            <if test="userDeliveryAddress != null">
+                user_delivery_address,
+            </if>
+            <if test="userAvatarUrl != null">
+                user_avatar_url,
+            </if>
+            <if test="userMobile != null">
+                user_mobile,
+            </if>
+            <if test="userBacklist != null">
+                user_backlist,
+            </if>
+            <if test="userRole != null">
+                user_role,
+            </if>
+            <if test="userJurisdiction != null">
+                user_jurisdiction,
+            </if>
+            <if test="userRegulateSchool != null">
+                user_regulate_school,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userSchoolId != null">
+                #{userSchoolId,jdbcType=INTEGER},
+            </if>
+            <if test="userRealName != null">
+                #{userRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickName != null">
+                #{userNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userGender != null">
+                #{userGender,jdbcType=INTEGER},
+            </if>
+            <if test="userDeliveryAddress != null">
+                #{userDeliveryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatarUrl != null">
+                #{userAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                #{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userBacklist != null">
+                #{userBacklist,jdbcType=BOOLEAN},
+            </if>
+            <if test="userRole != null">
+                #{userRole,jdbcType=INTEGER},
+            </if>
+            <if test="userJurisdiction != null">
+                #{userJurisdiction,jdbcType=INTEGER},
+            </if>
+            <if test="userRegulateSchool != null">
+                #{userRegulateSchool,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteByUserId" parameterType="java.lang.Long">
+        delete from user_info
+        where user_id=#{userId,jdbcType=BIGINT}
+    </delete>
+
+    <update id="updateByUserId" parameterType="java.lang.Long">
+        update user_info
+        <set>
+            <if test="userSchoolId != null">
+                user_school_id=#{userSchoolId,jdbcType=INTEGER},
+            </if>
+            <if test="userRealName != null">
+                user_real_name=#{userRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="userNickName != null">
+                user_nick_name=#{userNickName,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null">
+                user_password=#{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userGender != null">
+                user_gender=#{userGender,jdbcType=INTEGER},
+            </if>
+            <if test="userDeliveryAddress != null">
+                user_delivery_address=#{userDeliveryAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatarUrl != null">
+                user_avatar_url=#{userAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userMobile != null">
+                user_mobile=#{userMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="userBacklist != null">
+                user_backlist=#{userBacklist,jdbcType=BOOLEAN},
+            </if>
+            <if test="userRole != null">
+                user_role=#{userRole,jdbcType=INTEGER},
+            </if>
+            <if test="userJurisdiction != null">
+                user_jurisdiction=#{userJurisdiction,jdbcType=INTEGER},
+            </if>
+            <if test="userRegulateSchool != null">
+                user_regulate_school=#{userRegulateSchool,jdbcType=INTEGER},
+            </if>
+        </set>
+    </update>
+
+    <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from user_info
+        where user_id=#{userId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

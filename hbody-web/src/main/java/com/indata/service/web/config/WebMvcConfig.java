@@ -53,7 +53,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         private static final Logger log= LoggerFactory.getLogger(WebMvcConfig.class);
 
         /**
-         * 配置web连接使用
+         * 文件上传下载
          * @return
          */
         @Bean(name = "multipartResolver")

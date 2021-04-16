@@ -12,11 +12,11 @@ import org.springframework.context.annotation.PropertySource;
 @ComponentScan(basePackages = {
         "com.indata.service.core.service"
 })
-@PropertySource(value = {
-
-}, ignoreResourceNotFound = true,  encoding = "UTF-8")
 public class ApplicationConfig {
     /**
      * 后续添加redis，sms，weChat等配置添加
+     * @PropertySource(value = {
+     *
+     * }, ignoreResourceNotFound = true,  encoding = "UTF-8")
      */
 }

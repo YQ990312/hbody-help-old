@@ -1,6 +1,7 @@
 package com.indata.service.web;
 
 import com.indata.service.web.config.ApplicationConfig;
+import com.indata.service.web.config.DataSourceConfig;
 import com.indata.service.web.config.MybatisConfig;
 import com.indata.service.web.config.WebMvcConfig;
 import org.slf4j.Logger;
@@ -16,7 +17,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
         scanBasePackageClasses={
                 ApplicationConfig.class,
                 WebMvcConfig.class,
-                MybatisConfig.class
+                MybatisConfig.class,
+                DataSourceConfig.class
         },
         exclude = {
         DataSourceAutoConfiguration.class

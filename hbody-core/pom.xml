@@ -19,7 +19,31 @@
             <artifactId>hbody-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.hbody-help</groupId>
+            <artifactId>hbody-dal</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!--内部引用 end -->
+        <!--spring 依赖 start-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <!--spring 依赖 end -->
+
+        <!--测试 start-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--测试 end-->
     </dependencies>
 
     <build>
