@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ /*
+  ~ * Copyright 2020 byai.com All right reserved. This software is the
+  ~ * confidential and proprietary information of byai.com ("Confidential
+  ~ * Information"). You shall not disclose such Confidential Information and shall
+  ~ * use it only in accordance with the terms of the license agreement you entered
+  ~ * into with byai.com.
+  ~ */
+  -->
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.indata.service.dal.dao.EnumConfigOptionPOMapper">
+    <resultMap id="BaseResultMap" type="com.indata.service.dal.entity.EnumConfigOptionPO">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="config_type" jdbcType="VARCHAR" property="configType" />
+        <result column="config_key" jdbcType="VARCHAR" property="configKey" />
+        <result column="config_value" jdbcType="VARCHAR" property="configValue" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, config_type, config_key, config_value, description, gmt_create, gmt_modified
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enum_config_option
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from enum_config_option
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.indata.service.dal.entity.EnumConfigOptionPO">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into enum_config_option (config_type, config_key, config_value,
+        description, gmt_create, gmt_modified
+        )
+        values (#{configType,jdbcType=VARCHAR}, #{configKey,jdbcType=VARCHAR}, #{configValue,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.indata.service.dal.entity.EnumConfigOptionPO">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into enum_config_option
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="configType != null">
+                config_type,
+            </if>
+            <if test="configKey != null">
+                config_key,
+            </if>
+            <if test="configValue != null">
+                config_value,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="configType != null">
+                #{configType,jdbcType=VARCHAR},
+            </if>
+            <if test="configKey != null">
+                #{configKey,jdbcType=VARCHAR},
+            </if>
+            <if test="configValue != null">
+                #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.indata.service.dal.entity.EnumConfigOptionPO">
+        update enum_config_option
+        <set>
+            <if test="configType != null">
+                config_type = #{configType,jdbcType=VARCHAR},
+            </if>
+            <if test="configKey != null">
+                config_key = #{configKey,jdbcType=VARCHAR},
+            </if>
+            <if test="configValue != null">
+                config_value = #{configValue,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.indata.service.dal.entity.EnumConfigOptionPO">
+        update enum_config_option
+        set config_type = #{configType,jdbcType=VARCHAR},
+        config_key = #{configKey,jdbcType=VARCHAR},
+        config_value = #{configValue,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="getListByType" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from enum_config_option
+        where config_type = #{configType}
+    </select>
+
+    <select id="getByTypeAndKey" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from enum_config_option
+        where config_type = #{configType} and config_key = #{configKey}
+    </select>
+    <select id="getListByKey" resultMap="BaseResultMap">
+        SELECT * from enum_config_option WHERE config_key = #{configKey}
+    </select>
+
+    <select id="getConfigByCompany" resultMap="BaseResultMap">
+        SELECT * FROM enum_config_option WHERE config_key = #{configKey} AND config_type = #{configType}
+    </select>
+</mapper>
