@@ -12,8 +12,10 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.indata.service.web.filter.UserSessionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.annotation.Resource;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -52,6 +55,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         private static final Logger log= LoggerFactory.getLogger(WebMvcConfig.class);
 
+        @Resource
+        private UserSessionFilter userSessionFilter;
+
         /**
          * 文件上传下载
          * @return
@@ -66,6 +72,30 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 resolver.setResolveLazily(true);
                 resolver.setDefaultEncoding("UTF-8");
                 return resolver;
+        }
+
+        /**
+         * 添加过滤器
+         * @return
+         */
+        @Bean
+        public FilterRegistrationBean<UserSessionFilter> systemUrlFilterBean() {
+                /**
+                 * 配置无需过滤器过滤的路径
+                 */
+                StringBuffer excludeUrl = new StringBuffer();
+                excludeUrl.append("/apiUser/login/passwordLogin");
+                excludeUrl.append(",");
+
+
+                FilterRegistrationBean<UserSessionFilter> registrationBean = new FilterRegistrationBean<>();
+                registrationBean.setFilter(userSessionFilter);
+                registrationBean.addInitParameter("targetFilterLifecycle","true");
+                registrationBean.addUrlPatterns("/*");
+                registrationBean.addInitParameter("exclusions", excludeUrl.toString());
+                registrationBean.setName("accountSessionFilter");
+                registrationBean.setOrder(1);
+                return registrationBean;
         }
 
         /**

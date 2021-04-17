@@ -61,6 +61,13 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
         <!--jackson end-->
+
+        <!--javaxservlet start-->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+        <!--javaxservlet end-->
     </dependencies>
 
     <build>
