@@ -13,7 +13,7 @@ public class FreeLoginConstant {
 
     /**
      * 免登话术-session header
-    */
+     */
     public static final String X_BIND_ROBOT_HEADER = "x-bind-robot";
 
     /**

@@ -58,6 +58,7 @@ public class JsonUtils {
             this.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         }
     }
+
     public static JsonNode string2JsonNode(String jsonStr) {
         JsonNode jsonNode;
         try {

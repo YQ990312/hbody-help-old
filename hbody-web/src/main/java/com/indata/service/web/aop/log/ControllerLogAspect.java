@@ -28,10 +28,11 @@ import java.util.Arrays;
 @Order(1)
 public class ControllerLogAspect {
 
-    private final static Logger logger= LoggerFactory.getLogger(ControllerLogAspect.class);
+    private final static Logger logger = LoggerFactory.getLogger(ControllerLogAspect.class);
 
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
-    public void controller(){}
+    public void controller() {
+    }
 
     @Around("controller()")
     public Object doAroundMethod(ProceedingJoinPoint pig) throws Throwable {

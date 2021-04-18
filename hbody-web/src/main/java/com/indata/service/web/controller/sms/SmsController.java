@@ -16,15 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/sms")
 public class SmsController {
 
-    private static String FIANL_CODE="123456";
+    private static String FIANL_CODE = "123456";
 
     /**
      * 发送验证码
+     *
      * @param mobile
      * @return
      */
     @GetMapping("/send/code")
-    public ResultModel sendCode(@RequestParam("mobile") String mobile){
+    public ResultModel sendCode(@RequestParam("mobile") String mobile) {
         /**
          * 验证码放在redis中
          */
@@ -33,14 +34,15 @@ public class SmsController {
 
     /**
      * 验证-验证码
+     *
      * @param mobile
      * @param code
      * @return
      */
     @GetMapping("/check/code")
     public ResultModel checkoutCode(@RequestParam("mobiel") String mobile,
-                                    @RequestParam("code") String code){
-        if(!FIANL_CODE.equals(code)){
+                                    @RequestParam("code") String code) {
+        if (!FIANL_CODE.equals(code)) {
             return ResultModel.fail(CommonErrorCodeEnum.PHONE_VERIFY_CODE_ERROR);
         }
         return ResultModel.success();

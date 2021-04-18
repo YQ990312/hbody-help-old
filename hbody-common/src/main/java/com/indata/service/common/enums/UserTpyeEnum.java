@@ -5,9 +5,9 @@ package com.indata.service.common.enums;
  * @create 2021/4/18 10:39
  */
 public enum UserTpyeEnum {
-    SUPER_USER(0,"超级管理员"),
-    ADMINISTRATORS_USER(1,"学校管理员"),
-    MNT_MS_USERS(2,"普通用户");
+    SUPER_USER(0, "超级管理员"),
+    ADMINISTRATORS_USER(1, "学校管理员"),
+    MNT_MS_USERS(2, "普通用户");
 
     private Integer code;
     private String desc;

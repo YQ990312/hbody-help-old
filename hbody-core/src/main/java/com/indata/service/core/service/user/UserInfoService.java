@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface UserInfoService {
     /**
      * 增加用户
+     *
      * @param userInfoPO
      * @return
      */
@@ -20,12 +21,14 @@ public interface UserInfoService {
 
     /**
      * 删除用户
+     *
      * @param userId
      */
     void deleteByUserId(Long userId);
 
     /**
      * 更新用户信息
+     *
      * @param userInfoPO
      * @return
      */
@@ -33,6 +36,7 @@ public interface UserInfoService {
 
     /**
      * 查询用户信息
+     *
      * @param userId
      * @return
      */
@@ -40,6 +44,7 @@ public interface UserInfoService {
 
     /**
      * 根据手机号码查询用户
+     *
      * @param userLoginRequest
      * @return
      */
@@ -47,6 +52,7 @@ public interface UserInfoService {
 
     /**
      * 用户在线注册
+     *
      * @param mobile
      * @param password
      * @param response

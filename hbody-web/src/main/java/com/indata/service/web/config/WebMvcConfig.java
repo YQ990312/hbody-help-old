@@ -53,108 +53,112 @@ import java.util.stream.Stream;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
-        private static final Logger log= LoggerFactory.getLogger(WebMvcConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(WebMvcConfig.class);
 
-        @Resource
-        private UserSessionFilter userSessionFilter;
+    @Resource
+    private UserSessionFilter userSessionFilter;
 
+    /**
+     * 文件上传下载
+     *
+     * @return
+     */
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver commonsMultipartResolver() {
+        log.info("==== commonsMultipartResolver execute ====");
+
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        resolver.setMaxInMemorySize(200 * 1024 * 1024);
+        resolver.setMaxUploadSize(200 * 1024 * 1024);
+        resolver.setResolveLazily(true);
+        resolver.setDefaultEncoding("UTF-8");
+        return resolver;
+    }
+
+    /**
+     * 添加过滤器
+     *
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean<UserSessionFilter> systemUrlFilterBean() {
         /**
-         * 文件上传下载
-         * @return
+         * 配置无需过滤器过滤的路径
          */
-        @Bean(name = "multipartResolver")
-        public CommonsMultipartResolver commonsMultipartResolver() {
-                log.info("==== commonsMultipartResolver execute ====");
-
-                CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-                resolver.setMaxInMemorySize(200 * 1024 * 1024);
-                resolver.setMaxUploadSize(200 * 1024 * 1024);
-                resolver.setResolveLazily(true);
-                resolver.setDefaultEncoding("UTF-8");
-                return resolver;
-        }
-
-        /**
-         * 添加过滤器
-         * @return
-         */
-        @Bean
-        public FilterRegistrationBean<UserSessionFilter> systemUrlFilterBean() {
-                /**
-                 * 配置无需过滤器过滤的路径
-                 */
-                StringBuffer excludeUrl = new StringBuffer();
-                excludeUrl.append("/apiUser/login/passwordLogin");
-                excludeUrl.append(",");
+        StringBuffer excludeUrl = new StringBuffer();
+        excludeUrl.append("/apiUser/login/passwordLogin");
+        excludeUrl.append(",");
 
 
-                FilterRegistrationBean<UserSessionFilter> registrationBean = new FilterRegistrationBean<>();
-                registrationBean.setFilter(userSessionFilter);
-                registrationBean.addInitParameter("targetFilterLifecycle","true");
-                registrationBean.addUrlPatterns("/*");
-                registrationBean.addInitParameter("exclusions", excludeUrl.toString());
-                registrationBean.setName("accountSessionFilter");
-                registrationBean.setOrder(1);
-                return registrationBean;
-        }
+        FilterRegistrationBean<UserSessionFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(userSessionFilter);
+        registrationBean.addInitParameter("targetFilterLifecycle", "true");
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.addInitParameter("exclusions", excludeUrl.toString());
+        registrationBean.setName("accountSessionFilter");
+        registrationBean.setOrder(1);
+        return registrationBean;
+    }
 
-        /**
-         * 数据格式
-         * @param converters
-         */
-        @Override
-        public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-                log.info("==== mappingJackson2HttpMessageConverter execute ====");
+    /**
+     * 数据格式
+     *
+     * @param converters
+     */
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        log.info("==== mappingJackson2HttpMessageConverter execute ====");
 
-                MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter();
-                jacksonConverter.setSupportedMediaTypes(Stream.of(
-                        new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")),
-                        new MediaType("application", "*+json"),
-                        new MediaType(MediaType.TEXT_HTML, Charset.forName("UTF-8")),
-                        new MediaType(MediaType.TEXT_PLAIN, Charset.forName("UTF-8")),
-                        new MediaType(MediaType.MULTIPART_FORM_DATA, Charset.forName("UTF-8"))
-                ).collect(Collectors.toList()));
+        MappingJackson2HttpMessageConverter jacksonConverter = new MappingJackson2HttpMessageConverter();
+        jacksonConverter.setSupportedMediaTypes(Stream.of(
+                new MediaType(MediaType.APPLICATION_JSON, Charset.forName("UTF-8")),
+                new MediaType("application", "*+json"),
+                new MediaType(MediaType.TEXT_HTML, Charset.forName("UTF-8")),
+                new MediaType(MediaType.TEXT_PLAIN, Charset.forName("UTF-8")),
+                new MediaType(MediaType.MULTIPART_FORM_DATA, Charset.forName("UTF-8"))
+        ).collect(Collectors.toList()));
 
-                JavaTimeModule javaTimeModule = new JavaTimeModule();
-                //配置序列化格式
-                javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        JavaTimeModule javaTimeModule = new JavaTimeModule();
+        //配置序列化格式
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        javaTimeModule.addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        javaTimeModule.addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
-                //配置反序列化格式
-                javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        //配置反序列化格式
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
 
-                ObjectMapper objectMapper = new ObjectMapper();
-                objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-                objectMapper.setTimeZone(TimeZone.getDefault());
-                objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                objectMapper.registerModule(javaTimeModule);
-                objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-                objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.PUBLIC_ONLY);
-                jacksonConverter.setObjectMapper(objectMapper);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        objectMapper.setTimeZone(TimeZone.getDefault());
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(javaTimeModule);
+        objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+        objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.PUBLIC_ONLY);
+        jacksonConverter.setObjectMapper(objectMapper);
 
-                log.info("==== stringHttpMessageConverter execute ====");
-                StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
-                converters.add(stringConverter);
-                converters.add(jacksonConverter);
+        log.info("==== stringHttpMessageConverter execute ====");
+        StringHttpMessageConverter stringConverter = new StringHttpMessageConverter();
+        converters.add(stringConverter);
+        converters.add(jacksonConverter);
 
-                converters.parallelStream()
-                        //过滤出MappingJackson2HttpMessageConverter
-                        .filter(httpMessageConverter -> httpMessageConverter instanceof MappingJackson2HttpMessageConverter)
-                        //将所有MappingJackson2HttpMessageConverter中的objectMapper替换成自定义的策略
-                        .forEach(httpMessageConverter -> ((MappingJackson2HttpMessageConverter) httpMessageConverter).setObjectMapper(objectMapper));
-        }
+        converters.parallelStream()
+                //过滤出MappingJackson2HttpMessageConverter
+                .filter(httpMessageConverter -> httpMessageConverter instanceof MappingJackson2HttpMessageConverter)
+                //将所有MappingJackson2HttpMessageConverter中的objectMapper替换成自定义的策略
+                .forEach(httpMessageConverter -> ((MappingJackson2HttpMessageConverter) httpMessageConverter).setObjectMapper(objectMapper));
+    }
 
-        /**
-         * 拦截器
-         * @param registry
-         */
-        @Override
-        public void addInterceptors(InterceptorRegistry registry) {
-                log.info("==== addInterceptors init ====");
-        }
+    /**
+     * 拦截器
+     *
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        log.info("==== addInterceptors init ====");
+    }
 
 }

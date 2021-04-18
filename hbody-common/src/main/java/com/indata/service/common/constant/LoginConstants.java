@@ -24,7 +24,7 @@ public class LoginConstants {
 
     public static final String CLIENT_TOKEN_NAME = "client-name";
 
-    public static final int UUID_EXPIRE_TIME = 3600*24*3;
+    public static final int UUID_EXPIRE_TIME = 3600 * 24 * 3;
 
     public static final String PUSH_KEY = "!@#$%^&*&^%$#@!";
 

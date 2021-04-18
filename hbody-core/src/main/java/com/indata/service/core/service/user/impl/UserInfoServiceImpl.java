@@ -25,7 +25,7 @@ import java.util.Objects;
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
 
-    private final static Logger logger= LoggerFactory.getLogger(UserInfoServiceImpl.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserInfoServiceImpl.class);
 
     @Resource
     private UserInfoPOMapper userInfoPOMapper;
@@ -60,10 +60,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         if (StringUtils.isEmpty(password)) {
             throw new CommonException(CommonErrorCodeEnum.VALIDATE_ERROR, "手机号码不能为空", "用户登录，手机号码不能为空");
         }
-        UserInfoPO userInfoPO=userInfoPOMapper.selectByMobile(mobile,password);
-        if(Objects.isNull(userInfoPO)){
-            logger.error("mobile:{} 账号密码错误",mobile);
-            throw new CommonException(CommonErrorCodeEnum.VALIDATE_ERROR,"账号或密码错误","用户登录，账号或密码错误");
+        UserInfoPO userInfoPO = userInfoPOMapper.selectByMobile(mobile, password);
+        if (Objects.isNull(userInfoPO)) {
+            logger.error("mobile:{} 账号密码错误", mobile);
+            throw new CommonException(CommonErrorCodeEnum.VALIDATE_ERROR, "账号或密码错误", "用户登录，账号或密码错误");
         }
 
         //加密判断密码是否正确
@@ -91,26 +91,26 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public int onlineRegister(String mobile, String password, HttpServletResponse response) {
-        UserInfoPO userInfoPO=null;
-        try{
-            userInfoPO=addNewAccount(mobile,password);
+        UserInfoPO userInfoPO = null;
+        try {
+            userInfoPO = addNewAccount(mobile, password);
             getLoginToken(response);
-        }catch(Exception e){
-            if(Objects.nonNull(userInfoPO)){
+        } catch (Exception e) {
+            if (Objects.nonNull(userInfoPO)) {
                 userInfoPOMapper.deleteByUserId(userInfoPO.getUserId());
-            }else{
+            } else {
                 userInfoPOMapper.deleteByMobile(mobile);
             }
-            logger.error("mobile:{} 注册失败",mobile,e);
+            logger.error("mobile:{} 注册失败", mobile, e);
         }
         return 0;
     }
 
-    private UserInfoPO addNewAccount(String mobile,String password){
+    private UserInfoPO addNewAccount(String mobile, String password) {
         /**
          * 1.生成用户
          */
-        UserInfoPO userInfoPO=addUser(mobile,password);
+        UserInfoPO userInfoPO = addUser(mobile, password);
 
         /**
          * 2.创建用户
@@ -120,9 +120,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoPO;
     }
 
-    private UserInfoPO addUser(String mobile,String password){
-        UserInfoPO userInfoPO=new UserInfoPO();
-        userInfoPO.setUserNickName("宅帮-老板"+ UUIDUtils.generateFourUUID());
+    private UserInfoPO addUser(String mobile, String password) {
+        UserInfoPO userInfoPO = new UserInfoPO();
+        userInfoPO.setUserNickName("宅帮-老板" + UUIDUtils.generateFourUUID());
         userInfoPO.setUserPassword(password);
         userInfoPO.setUserGender(0);
         userInfoPO.setUserMobile(mobile);
@@ -130,16 +130,16 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoPO;
     }
 
-    private void getLoginToken(HttpServletResponse response){
-        if(response==null){
+    private void getLoginToken(HttpServletResponse response) {
+        if (response == null) {
             return;
         }
-        try{
-            String token= UUIDUtils.generateUUID();
-            CookieUtil.setCookie(response, LoginConstants.COOKIE_TOKEN_NAME,token,LoginConstants.UUID_EXPIRE_TIME);
-            CookieUtil.setCookie(response, LoginConstants.CLIENT_TOKEN_NAME,"pc-client",LoginConstants.UUID_EXPIRE_TIME);
-        }catch(Exception e){
-            logger.error("设置cookie失败",e);
+        try {
+            String token = UUIDUtils.generateUUID();
+            CookieUtil.setCookie(response, LoginConstants.COOKIE_TOKEN_NAME, token, LoginConstants.UUID_EXPIRE_TIME);
+            CookieUtil.setCookie(response, LoginConstants.CLIENT_TOKEN_NAME, "pc-client", LoginConstants.UUID_EXPIRE_TIME);
+        } catch (Exception e) {
+            logger.error("设置cookie失败", e);
         }
     }
 }

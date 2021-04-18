@@ -153,8 +153,8 @@ public enum CommonErrorCodeEnum {
     /**
      * 充值金额异常
      */
-    RECHARGE_AMOUNT_OVERFLOW(30001,"单次充值最多不超过9999元"),
-    APP_IDENTITY_FAIL(40001,"身份认证失败"),
+    RECHARGE_AMOUNT_OVERFLOW(30001, "单次充值最多不超过9999元"),
+    APP_IDENTITY_FAIL(40001, "身份认证失败"),
 
     EXIST_KNOWLEDGE_REFERENCE(1000, "该流程节点已被知识库关联引用"),
     EXIST_CS_GROUP_REFERENCE(1001, "该坐席组已被话术关联引用"),
@@ -162,29 +162,29 @@ public enum CommonErrorCodeEnum {
     /**
      * 百应宝app登录
      */
-    WECHAT_NOT_BIND_PHONE(50001,"该微信未绑定百应账户，请绑定后再使用微信登录"),
-    PERSONAL_USER_NOT_PERMISSION(50002,"抱歉，您暂没有权限进入，请前往应用市场下载【百应宝】进行使用"),
-    EE_USER_NOT_PERMISSION(50003,"亲~您已是企业版客户，请前往应用市场下载【百应CRM】进行使用"),
+    WECHAT_NOT_BIND_PHONE(50001, "该微信未绑定百应账户，请绑定后再使用微信登录"),
+    PERSONAL_USER_NOT_PERMISSION(50002, "抱歉，您暂没有权限进入，请前往应用市场下载【百应宝】进行使用"),
+    EE_USER_NOT_PERMISSION(50003, "亲~您已是企业版客户，请前往应用市场下载【百应CRM】进行使用"),
 
     /**
      * APP推送限流错误码
      */
-    APP_LIMITS_ERROR(131000004,"APP推送达到限流标准"),
+    APP_LIMITS_ERROR(131000004, "APP推送达到限流标准"),
 
     /**
      * 名片错误码
      */
-    BUSINESS_CARD_UNOPEN(30000001,"用户所属公司没有名片"),
-    BUSINESS_CARD_COUNT_ERROR(30000002,"名片剩余数量不足，请升级"),
-    BUSINESS_CARD_EXPIRE(30000003,"名片已过期，请续费"),
+    BUSINESS_CARD_UNOPEN(30000001, "用户所属公司没有名片"),
+    BUSINESS_CARD_COUNT_ERROR(30000002, "名片剩余数量不足，请升级"),
+    BUSINESS_CARD_EXPIRE(30000003, "名片已过期，请续费"),
 
     /**
      * aicrm
      */
-    AUTH_ACCOUNT_NOT_ENOUGH(40000001,"剩余可授权用户数不足"),
-    QUERY_PERMISSION_GARY_FAIL(40000002,"权限灰度查询失败"),
-    OVER_MAX_ROLE_LIST(40000003,"用户最多绑定5个角色"),
-    NOT_SUPPORT_DEGRADE(40000004,"暂不支持产品降级"),
+    AUTH_ACCOUNT_NOT_ENOUGH(40000001, "剩余可授权用户数不足"),
+    QUERY_PERMISSION_GARY_FAIL(40000002, "权限灰度查询失败"),
+    OVER_MAX_ROLE_LIST(40000003, "用户最多绑定5个角色"),
+    NOT_SUPPORT_DEGRADE(40000004, "暂不支持产品降级"),
 
     //用户邀请-绑定角色
     INVITEE_UPDATE_RELATION_FAILED(50000001, "邀请用户绑定角色失败，请前往用户编辑页进行操作"),
@@ -235,10 +235,10 @@ public enum CommonErrorCodeEnum {
         this.msg = msg;
     }
 
-    public static CommonErrorCodeEnum fromCode(Integer code){
+    public static CommonErrorCodeEnum fromCode(Integer code) {
         CommonErrorCodeEnum[] enums = CommonErrorCodeEnum.values();
-        for(CommonErrorCodeEnum errorCode : enums){
-            if (errorCode.code.equals(code)){
+        for (CommonErrorCodeEnum errorCode : enums) {
+            if (errorCode.code.equals(code)) {
                 return errorCode;
             }
         }

@@ -16,9 +16,10 @@ package com.indata.service.common.constant;
  * @date 22/05/2017
  */
 public class CommonConfigConstant {
-    private CommonConfigConstant() {}
+    private CommonConfigConstant() {
+    }
 
-    public static final String REQUEST_ID ="REQUEST_ID";
+    public static final String REQUEST_ID = "REQUEST_ID";
     public static final String PHONE_CAPTCHA = "PHONE_CAPTCHA";
     public static final String INVITEE_PHONE_CAPTCHA = "INVITEE_PHONE_CAPTCHA";
     /**

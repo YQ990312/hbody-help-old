@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
  * @author yangqi
  */
 @SpringBootApplication(
-        scanBasePackageClasses={
+        scanBasePackageClasses = {
                 ApplicationConfig.class,
                 WebMvcConfig.class,
                 MybatisConfig.class,
@@ -23,8 +23,8 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
                 UserSessionFilter.class
         },
         exclude = {
-        DataSourceAutoConfiguration.class
-})
+                DataSourceAutoConfiguration.class
+        })
 public class Bootstrap {
 
     private static final Logger logger = LoggerFactory.getLogger(Bootstrap.class);
@@ -38,8 +38,6 @@ public class Bootstrap {
         logger.info("============================= spring boot start successful ! cost = {} =============================", cost);
 
     }
-
-
 
 
 }

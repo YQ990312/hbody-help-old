@@ -41,9 +41,9 @@ public class CookieUtil {
         response.addCookie(newCookie);
     }
 
-    public static void setCookie(HttpServletResponse response, String key, String crmDomain,String value, int maxAge) {
+    public static void setCookie(HttpServletResponse response, String key, String crmDomain, String value, int maxAge) {
 
-        Cookie cookie = new Cookie(key,value);
+        Cookie cookie = new Cookie(key, value);
         //通过二级域名共享cookie
         cookie.setDomain(crmDomain);
         cookie.setPath("/");

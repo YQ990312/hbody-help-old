@@ -1,12 +1,10 @@
-package com.indata.service.core.service.user;
+package com.indata.service.core.facade.user;
 
-import com.indata.service.core.service.user.impl.UserInfoServiceImpl;
 import com.indata.service.dal.entity.UserInfoPO;
 import com.indata.service.web.Bootstrap;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

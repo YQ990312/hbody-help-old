@@ -30,18 +30,19 @@ public class UserLoginController {
 
     /**
      * 用户账号密码登入
+     *
      * @return
      */
     @PostMapping("/mobileAndPassword")
-    public ResultModel loginAndPassword(@RequestBody UserLoginRequest userLoginRequest, HttpServletResponse response){
-        UserInfoPO userInfoPO=userInfoService.selectByMobile(userLoginRequest);
-        if(Objects.isNull(userInfoPO)){
-            return ResultModel.fail(CommonErrorCodeEnum.VALIDATE_ERROR,"用户不存在");
+    public ResultModel loginAndPassword(@RequestBody UserLoginRequest userLoginRequest, HttpServletResponse response) {
+        UserInfoPO userInfoPO = userInfoService.selectByMobile(userLoginRequest);
+        if (Objects.isNull(userInfoPO)) {
+            return ResultModel.fail(CommonErrorCodeEnum.VALIDATE_ERROR, "用户不存在");
         }
         //生成token，以后放redis中，以token为键，accountId为值放入redis中
-        String token= UUIDUtils.generateUUID();
-        CookieUtil.setCookie(response, LoginConstants.COOKIE_TOKEN_NAME,token,LoginConstants.UUID_EXPIRE_TIME);
-        CookieUtil.setCookie(response, LoginConstants.CLIENT_TOKEN_NAME,"pc-client",LoginConstants.UUID_EXPIRE_TIME);
+        String token = UUIDUtils.generateUUID();
+        CookieUtil.setCookie(response, LoginConstants.COOKIE_TOKEN_NAME, token, LoginConstants.UUID_EXPIRE_TIME);
+        CookieUtil.setCookie(response, LoginConstants.CLIENT_TOKEN_NAME, "pc-client", LoginConstants.UUID_EXPIRE_TIME);
 
         return ResultModel.success(userInfoPO, "登录成功");
     }

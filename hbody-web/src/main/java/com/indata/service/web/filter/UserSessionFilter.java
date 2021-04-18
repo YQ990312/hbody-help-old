@@ -22,7 +22,7 @@ import java.util.Objects;
 @Configuration
 public class UserSessionFilter extends OncePerRequestFilter {
 
-    private static final Logger logger= LoggerFactory.getLogger(UserSessionFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
 
 
     @Override
@@ -37,13 +37,13 @@ public class UserSessionFilter extends OncePerRequestFilter {
          */
         String clientName = CookieUtil.getCookie(request, LoginConstants.CLIENT_TOKEN_NAME);
 
-        if(StringUtils.isEmpty(clientName)){
+        if (StringUtils.isEmpty(clientName)) {
             /**
              * 执行过滤拦截
              */
             this.doFilter(request);
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
     @Override
@@ -53,21 +53,23 @@ public class UserSessionFilter extends OncePerRequestFilter {
 
     /**
      * 拦截请求，判断token是否失效，是否需要重新登入
+     *
      * @param request
      */
-    private void doFilter(HttpServletRequest request){
-        String token=null;
-        Long accountId=null;
-        try{
-            token=CookieUtil.getCookie(request,LoginConstants.COOKIE_TOKEN_NAME);
-            if(StringUtils.isNotEmpty(token)){
-                accountId=Math.round(Math.random()*1000);
+    private void doFilter(HttpServletRequest request) {
+        String token = null;
+        Long accountId = null;
+        try {
+            token = CookieUtil.getCookie(request, LoginConstants.COOKIE_TOKEN_NAME);
+            if (StringUtils.isNotEmpty(token)) {
+                //去redis中获取accountId,判断登入是否过期。获取登入的userId.
+                accountId = Math.round(Math.random() * 1000);
             }
-            if(accountId!=null&& accountId>0){
+            if (accountId != null && accountId > 0) {
                 request.setAttribute(LoginConstants.ACCOUNT_ATTRIBUTE, accountId);
                 request.setAttribute(LoginConstants.COOKIE_TOKEN_NAME, token);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error("AccountSessionFilter.doFilter failed", e);
             Boolean requestIsNull = Objects.isNull(request);
             logger.error("AccountSessionFilter.doFilter failed request is null:{}", requestIsNull);

@@ -16,10 +16,11 @@ import javax.annotation.Resource;
 public class TestController {
     @Resource
     private UserInfoService userInfoService;
+
     @GetMapping("/get")
-    public String test(){
+    public String test() {
         Integer a = null;
-        UserInfoPO userInfoPO=new UserInfoPO();
+        UserInfoPO userInfoPO = new UserInfoPO();
         userInfoPO.setUserSchoolId(12123);
         userInfoPO.setUserRealName("杨家齐");
         userInfoPO.setUserNickName("空城");

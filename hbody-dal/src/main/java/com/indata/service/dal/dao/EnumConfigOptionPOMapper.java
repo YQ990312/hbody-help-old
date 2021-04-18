@@ -14,6 +14,7 @@ package com.indata.service.dal.dao;
 import com.indata.service.dal.entity.EnumConfigOptionPO;
 
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 
@@ -41,8 +42,8 @@ public interface EnumConfigOptionPOMapper {
 
     EnumConfigOptionPO getByTypeAndKey(@Param("configType") String configType, @Param("configKey") String configKey);
 
-    List<EnumConfigOptionPO> getListByKey(@Param("configKey")String configKey);
+    List<EnumConfigOptionPO> getListByKey(@Param("configKey") String configKey);
 
 
-    EnumConfigOptionPO getConfigByCompany(@Param("configType")String configType,@Param("configKey")String configKey);
+    EnumConfigOptionPO getConfigByCompany(@Param("configType") String configType, @Param("configKey") String configKey);
 }

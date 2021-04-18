@@ -17,7 +17,7 @@ public class UserController {
 
 
     @PostMapping("/add")
-    public ResultModel add(@RequestBody UserUpdateRequest userUpdateRequest){
+    public ResultModel add(@RequestBody UserUpdateRequest userUpdateRequest) {
         return null;
     }
 }

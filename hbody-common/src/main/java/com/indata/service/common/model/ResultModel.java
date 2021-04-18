@@ -15,12 +15,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.indata.service.common.enums.CommonErrorCodeEnum;
 import com.indata.service.common.exception.CommonException;
 import org.apache.commons.lang3.StringUtils;
+
 import static com.indata.service.common.enums.CommonErrorCodeEnum.SUCCESS;
 
 
 /**
  * ResultModel 返回结果类
- *
+ * <p>
  * Created by tianjin.lp on 16/8/31.
  */
 public class ResultModel<T> {
@@ -31,15 +32,15 @@ public class ResultModel<T> {
     private String errorStackTrace;
     private String requestId;
 
-    private static ResultModel SUCCESS_RESULT_MODEL = ResultModel.success(null,"执行成功");
+    private static ResultModel SUCCESS_RESULT_MODEL = ResultModel.success(null, "执行成功");
 
     public static ResultModel success() {
 
         return SUCCESS_RESULT_MODEL;
     }
 
-    public static ResultModel success(String msg){
-        return success(null,msg);
+    public static ResultModel success(String msg) {
+        return success(null, msg);
     }
 
 
@@ -129,6 +130,7 @@ public class ResultModel<T> {
     public int getCode() {
         return code;
     }
+
     @JsonIgnore
     public String getErrorStackTrace() {
         return errorStackTrace;

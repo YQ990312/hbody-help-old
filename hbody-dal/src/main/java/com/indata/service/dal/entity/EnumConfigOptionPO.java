@@ -28,7 +28,6 @@ public class EnumConfigOptionPO implements Serializable {
 
     /**
      * VARCHAR(64) 必填
-     *
      */
     private String configType;
 

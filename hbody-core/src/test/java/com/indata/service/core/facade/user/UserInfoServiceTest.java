@@ -1,8 +1,6 @@
-package com.indata.service.core.service.user;
+package com.indata.service.core.facade.user;
 
-import com.indata.service.core.service.user.impl.UserInfoServiceImpl;
 import com.indata.service.dal.entity.UserInfoPO;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.SpringBootConfiguration;
@@ -18,7 +16,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @SpringBootConfiguration
 public class UserInfoServiceTest {
 
-    private UserInfoService userInfoService=new UserInfoServiceImpl();
 
     @Test
     public void insert(){
@@ -35,8 +32,6 @@ public class UserInfoServiceTest {
         userInfoPO.setUserRole(0);
         userInfoPO.setUserJurisdiction(2);
         userInfoPO.setUserRegulateSchool(112);
-        int row=userInfoService.insert(userInfoPO);
-        Assert.assertTrue(row==1);
     }
 
     public void deleteByUserId(Long userId){
