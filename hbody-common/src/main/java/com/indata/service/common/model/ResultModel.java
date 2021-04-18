@@ -31,12 +31,17 @@ public class ResultModel<T> {
     private String errorStackTrace;
     private String requestId;
 
-    private static ResultModel SUCCESS_RESULT_MODEL = ResultModel.success(null);
+    private static ResultModel SUCCESS_RESULT_MODEL = ResultModel.success(null,"执行成功");
 
     public static ResultModel success() {
 
         return SUCCESS_RESULT_MODEL;
     }
+
+    public static ResultModel success(String msg){
+        return success(null,msg);
+    }
+
 
     @JsonIgnore
     public boolean isSuccess() {

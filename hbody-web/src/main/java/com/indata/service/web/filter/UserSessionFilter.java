@@ -26,7 +26,7 @@ public class UserSessionFilter extends OncePerRequestFilter {
 
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         logger.info("过滤器启动");
     }
 
@@ -61,7 +61,7 @@ public class UserSessionFilter extends OncePerRequestFilter {
         try{
             token=CookieUtil.getCookie(request,LoginConstants.COOKIE_TOKEN_NAME);
             if(StringUtils.isNotEmpty(token)){
-                accountId=Math.round(Math.random()*10);
+                accountId=Math.round(Math.random()*1000);
             }
             if(accountId!=null&& accountId>0){
                 request.setAttribute(LoginConstants.ACCOUNT_ATTRIBUTE, accountId);

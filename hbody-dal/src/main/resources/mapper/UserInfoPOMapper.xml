@@ -160,4 +160,16 @@
         where user_id=#{userId,jdbcType=BIGINT}
     </select>
 
+    <select id="selectByMobile" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where user_mobile=#{userMobile,jdbcType=VARCHAR}
+        and user_password=#{userPassword,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByMobile" parameterType="java.lang.Integer">
+        delete from user_info
+        where user_mobile=#{mobile,jdbcType=VARCHAR}
+    </delete>
 </mapper>

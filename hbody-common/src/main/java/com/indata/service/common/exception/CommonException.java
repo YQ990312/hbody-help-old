@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 /**
  * Created on 2017/03/10
  *
- * @author annpeter.it@gmail.com
+ * @author yangqi
  */
 public class CommonException extends RuntimeException {
 
