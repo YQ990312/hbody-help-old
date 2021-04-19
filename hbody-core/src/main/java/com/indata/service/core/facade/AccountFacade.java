@@ -1,6 +1,15 @@
 package com.indata.service.core.facade;
 
+import com.indata.service.core.service.user.UserInfoService;
+import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.dal.entity.UserInfoPO;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author yangqi
@@ -8,4 +17,36 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AccountFacade {
+
+    private final static Logger logger= LoggerFactory.getLogger(AccountFacade.class);
+
+    @Resource
+    private UserInfoService userInfoService;
+
+    public UserInfoPO getUserByAccountId(Long userId) {
+        if (null == userId) {
+            return null;
+        }
+
+        try {
+            UserInfoPO accountUser = userInfoService.selectByUserId(userId);
+            if (null == accountUser) {
+                return null;
+            }
+            return accountUser;
+        } catch (Exception e) {
+            logger.error("accountService.getUserByAccountId:{} throw error", userId, e);
+        }
+        return null;
+    }
+
+    public UserBO toUserBO(UserInfoPO userInfoPO) {
+        UserBO userBO = new UserBO();
+        try {
+
+        } catch (Exception e) {
+            logger.info("accountService.toUserBO:{}, e:", userInfoPO, e);
+        }
+        return userBO;
+    }
 }

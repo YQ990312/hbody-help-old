@@ -1,16 +1,23 @@
 package com.indata.service.web.intercepter;
 
+import com.indata.service.common.constant.LoginConstants;
 import com.indata.service.common.enums.CommonErrorCodeEnum;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.common.util.JsonUtils;
 import com.indata.service.common.util.SessionUtil;
+import com.indata.service.core.facade.AccountFacade;
+import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.dal.entity.UserInfoPO;
+import com.indata.service.web.controller.HttpRequestHolders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,6 +32,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 public class UserLoginInterception implements HandlerInterceptor {
 
     private final static Logger logger= LoggerFactory.getLogger(UserLoginInterception.class);
+
+    @Resource
+    private AccountFacade accountFacade;
     /**
      * 未登入
      */
@@ -45,7 +55,23 @@ public class UserLoginInterception implements HandlerInterceptor {
             writeOutJson(response, UN_LOGIN_MSG);
             return false;
         }
-        //没有单点登入服务，这里塞一个session
+        //没有单点登入服务，这里塞一个session,提供业务需求使用
+        UserInfoPO newUserPO = accountFacade.getUserByAccountId(accountId);
+        if (null == newUserPO) {
+            logger.info("用户不存在，可能被删除,url:{}, param:{}, accountId:{}",
+                    request.getRequestURL(), getParamString(request), accountId);
+            writeOutJson(response, NOT_EXIT_MSG);
+            return false;
+        }
+        UserBO newUserBO = accountFacade.toUserBO(newUserPO);
+        if (null == newUserBO) {
+            logger.info("interceptor to userBO fail, url:{}, accountId:{}",
+                    request.getRequestURL(), accountId);
+            return false;
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute(LoginConstants.LOGIN_USER, newUserBO);
+        HttpRequestHolders.setHttpServletRequest(request);
         return true;
     }
 
