@@ -1,9 +1,6 @@
 package com.indata.service.web;
 
-import com.indata.service.web.config.ApplicationConfig;
-import com.indata.service.web.config.DataSourceConfig;
-import com.indata.service.web.config.MybatisConfig;
-import com.indata.service.web.config.WebMvcConfig;
+import com.indata.service.web.config.*;
 import com.indata.service.web.filter.UserSessionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

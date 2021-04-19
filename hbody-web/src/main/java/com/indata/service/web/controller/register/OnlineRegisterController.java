@@ -2,7 +2,7 @@ package com.indata.service.web.controller.register;
 
 import com.indata.service.common.enums.CommonErrorCodeEnum;
 import com.indata.service.common.model.ResultModel;
-import com.indata.service.core.facade.user.UserInfoService;
+import com.indata.service.core.service.user.UserInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

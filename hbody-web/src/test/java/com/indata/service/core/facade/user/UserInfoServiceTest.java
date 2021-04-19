@@ -1,5 +1,6 @@
 package com.indata.service.core.facade.user;
 
+import com.indata.service.core.service.user.UserInfoService;
 import com.indata.service.dal.entity.UserInfoPO;
 import com.indata.service.web.Bootstrap;
 import org.junit.Assert;

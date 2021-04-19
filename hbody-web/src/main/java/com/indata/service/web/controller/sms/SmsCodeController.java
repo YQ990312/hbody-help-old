@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 验证码放在redis中.
  */
 @RestController
-@RequestMapping("api/sms")
-public class SmsController {
+@RequestMapping("api/sms/code")
+public class SmsCodeController {
 
     private static String FIANL_CODE = "123456";
 
@@ -24,7 +24,7 @@ public class SmsController {
      * @param mobile
      * @return
      */
-    @GetMapping("/send/code")
+    @GetMapping("/send")
     public ResultModel sendCode(@RequestParam("mobile") String mobile) {
         /**
          * 验证码放在redis中
@@ -39,7 +39,7 @@ public class SmsController {
      * @param code
      * @return
      */
-    @GetMapping("/check/code")
+    @GetMapping("/check")
     public ResultModel checkoutCode(@RequestParam("mobiel") String mobile,
                                     @RequestParam("code") String code) {
         if (!FIANL_CODE.equals(code)) {

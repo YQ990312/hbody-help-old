@@ -12,6 +12,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.indata.service.common.constant.ThirdPartyConstant;
 import com.indata.service.web.filter.UserSessionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,13 +45,13 @@ import java.util.stream.Stream;
  * @author yangqi
  */
 @Configuration
+@EnableWebMvc
 @ComponentScan(
         basePackages = {
                 "com.indata.service.web.controller",
                 "com.indata.service.web.aop"
         }
 )
-@EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(WebMvcConfig.class);
