@@ -12,7 +12,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.indata.service.common.constant.ThirdPartyConstant;
 import com.indata.service.web.filter.UserSessionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

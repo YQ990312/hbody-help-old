@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.indata.service.dal.dao.OrderInfoPOMapper">
+    <resultMap id="BaseResultMap" type="com.indata.service.dal.entity.OrderInfoPO">
+        <id column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="order_user" jdbcType="BIGINT" property="orderUser"/>
+        <result column="order_sure_time" jdbcType="TIMESTAMP" property="orderSureTime"/>
+        <result column="order_school" jdbcType="INTEGER" property="orderSchool"/>
+        <result column="order_user_mobile" jdbcType="VARCHAR" property="orderUserMobile"/>
+        <result column="order_user_number" jdbcType="VARCHAR" property="orderUserNumber"/>
+        <result column="order_weight" jdbcType="INTEGER" property="orderWeight"/>
+        <result column="order_address" jdbcType="INTEGER" property="orderAddress"/>
+        <result column="order_get_address" jdbcType="VARCHAR" property="orderGetAddress"/>
+        <result column="order_comment" jdbcType="VARCHAR" property="orderComment"/>
+        <result column="order_descrebe" jdbcType="VARCHAR" property="orderDescrebe"/>
+        <result column="order_status" jdbcType="INTEGER" property="orderStatus"/>
+        <result column="order_person" jdbcType="BIGINT" property="orderPerson"/>
+        <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_id,order_user,order_sure_time,order_school,order_user_mobile,order_user_number,order_weight,
+        order_address,order_get_address,order_comment,order_descrebe,order_status,order_person,
+        gmt_create,gmt_modified
+    </sql>
+
+    <select id="selectByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from order_info
+        where order_id=#{orderId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteByOrderId" parameterType="java.lang.Long">
+        delete from order_info
+        where order_id=#{orderId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="createNewOrder" parameterType="com.indata.service.dal.entity.OrderInfoPO">
+        <selectKey keyProperty="userId" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderUser != null">
+                order_user,
+            </if>
+            <if test="orderSureTime != null">
+                order_sure_time,
+            </if>
+            <if test="orderSchool != null">
+                order_school,
+            </if>
+            <if test="orderUserMobile != null">
+                order_user_mobile,
+            </if>
+            <if test="orderUserNumber != null">
+                order_user_number,
+            </if>
+            <if test="orderWeight != null">
+                order_weight,
+            </if>
+            <if test="orderAddress != null">
+                order_address,
+            </if>
+            <if test="orderGetAddress != null">
+                order_get_address,
+            </if>
+            <if test="orderComment != null">
+                order_comment,
+            </if>
+            <if test="orderDescrebe != null">
+                order_descrebe,
+            </if>
+            <if test="orderStatus != null">
+                order_status,
+            </if>
+            <if test="orderPerson != null">
+                order_person,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderUser != null">
+                #{orderUser,jdbcType=BIGINT},
+            </if>
+            <if test="orderSureTime != null">
+                #{orderSureTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderSchool != null">
+                #{orderSchool,jdbcType=INTEGER},
+            </if>
+            <if test="orderUserMobile != null">
+                #{orderUserMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="orderUserNumber != null">
+                #{orderUserNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderWeight != null">
+                #{orderWeight,jdbcType=INTEGER},
+            </if>
+            <if test="orderAddress != null">
+                #{orderAddress,jdbcType=INTEGER},
+            </if>
+            <if test="orderGetAddress != null">
+                #{orderGetAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="orderComment != null">
+                #{orderComment,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDescrebe != null">
+                #{orderDescrebe,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                #{orderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="orderPerson != null">
+                #{orderPerson,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByOrderId" parameterType="com.indata.service.dal.entity.OrderInfoPO">
+        update order_info
+        <set>
+            <if test="orderUser != null">
+                order_user=#{orderUser,jdbcType=BIGINT},
+            </if>
+            <if test="orderSureTime != null">
+                order_sure_time=#{orderSureTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="orderSchool != null">
+                order_school=#{orderSchool,jdbcType=INTEGER},
+            </if>
+            <if test="orderUserMobile != null">
+                order_user_mobile=#{orderUserMobile,jdbcType=VARCHAR},
+            </if>
+            <if test="orderUserNumber != null">
+                order_user_number=#{orderUserNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="orderWeight != null">
+                order_weight=#{orderWeight,jdbcType=INTEGER},
+            </if>
+            <if test="orderAddress != null">
+                order_address=#{orderAddress,jdbcType=INTEGER},
+            </if>
+            <if test="orderGetAddress != null">
+                order_get_address=#{orderGetAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="orderComment != null">
+                order_comment=#{orderComment,jdbcType=VARCHAR},
+            </if>
+            <if test="orderDescrebe != null">
+                order_descrebe=#{orderDescrebe,jdbcType=VARCHAR},
+            </if>
+            <if test="orderStatus != null">
+                order_status=#{orderStatus,jdbcType=INTEGER},
+            </if>
+            <if test="orderPerson != null">
+                order_person=#{orderPerson,jdbcType=BIGINT},
+            </if>
+        </set>
+    </update>
+</mapper>
