@@ -6,8 +6,6 @@ import org.springframework.context.annotation.*;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @author yangqi
@@ -15,7 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.indata.service.core.service"
+        "com.indata.service.core"
 })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class ApplicationConfig {
