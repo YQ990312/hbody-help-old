@@ -2,11 +2,13 @@ package com.indata.service.web.filter;
 
 import com.indata.service.common.constant.LoginConstants;
 import com.indata.service.common.util.CookieUtil;
+import com.indata.service.core.tool.redis.RedisService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -24,6 +26,8 @@ public class UserSessionFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(UserSessionFilter.class);
 
+    @Resource
+    private RedisService redisService;
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -63,7 +67,7 @@ public class UserSessionFilter extends OncePerRequestFilter {
             token = CookieUtil.getCookie(request, LoginConstants.COOKIE_TOKEN_NAME);
             if (StringUtils.isNotEmpty(token)) {
                 //去redis中获取accountId,判断登入是否过期。获取登入的userId.
-                accountId = Math.round(Math.random() * 1000);
+                accountId = Long.valueOf(redisService.get(token));
             }
             if (accountId != null && accountId > 0) {
                 request.setAttribute(LoginConstants.ACCOUNT_ATTRIBUTE, accountId);
