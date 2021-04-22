@@ -24,6 +24,7 @@ public class ExpressDynaServiceImpl implements ExpressDynaService {
     @Override
     public int expressDynaSubmit(OrderSubmitRequest orderSubmitRequest, UserBO userBO) {
         OrderInfoPO orderInfoPO=conversionToPo(orderSubmitRequest,userBO);
+        System.out.println("数据"+orderInfoPO.getOrderId());
         return orderInfoPOMapper.createNewOrder(orderInfoPO);
     }
     private OrderInfoPO conversionToPo(OrderSubmitRequest orderSubmitRequest,UserBO userBO){
