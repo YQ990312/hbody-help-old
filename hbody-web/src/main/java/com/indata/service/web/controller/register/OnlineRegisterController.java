@@ -25,14 +25,14 @@ public class OnlineRegisterController {
 
 
     @PostMapping("/mobile")
-    public ResultModel onelineRegister(@RequestParam("mobile") String mobile,
+    public ResultModel onelineRegister(@RequestParam(name = "mobile") String mobile,
                                        @RequestParam(name = "password") String password,
                                        @RequestParam(name = "fansId", required = false) Integer fansId,
                                        HttpServletResponse response) {
         if (StringUtils.isEmpty(password)) {
             return ResultModel.fail(CommonErrorCodeEnum.VALIDATE_ERROR, "密码格式错误");
         }
-        userInfoService.onlineRegister(mobile,password,response);
+        userInfoService.onlineRegister(mobile, password, response);
         return ResultModel.success("注册成功");
     }
 }
