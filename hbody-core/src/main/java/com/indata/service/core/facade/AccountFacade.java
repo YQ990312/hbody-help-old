@@ -43,7 +43,16 @@ public class AccountFacade {
     public UserBO toUserBO(UserInfoPO userInfoPO) {
         UserBO userBO = new UserBO();
         try {
-
+            userBO.setUserId(userInfoPO.getUserId());
+            userBO.setUserSchoolId(userInfoPO.getUserSchoolId());
+            userBO.setUserNickName(userInfoPO.getUserNickName());
+            userBO.setUserRealName(userInfoPO.getUserRealName());
+            userBO.setUserGender(userInfoPO.getUserGender());
+            userBO.setUserDeliveryAddress(userInfoPO.getUserDeliveryAddress());
+            userBO.setUserAvatarUrl(userInfoPO.getUserAvatarUrl());
+            userBO.setUserMobile(userInfoPO.getUserMobile());
+            userBO.setUserJurisdiction(userInfoPO.getUserJurisdiction());
+            userBO.setUserRegulateSchool(userInfoPO.getUserRegulateSchool());
         } catch (Exception e) {
             logger.info("accountService.toUserBO:{}, e:", userInfoPO, e);
         }

@@ -7,6 +7,7 @@ import com.indata.service.common.util.CookieUtil;
 import com.indata.service.common.util.UUIDUtils;
 import com.indata.service.core.service.user.UserInfoService;
 import com.indata.service.core.tool.redis.RedisService;
+import com.indata.service.core.vo.bo.UserBO;
 import com.indata.service.core.vo.request.UserLoginRequest;
 import com.indata.service.dal.entity.UserInfoPO;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,7 +49,7 @@ public class UserLoginController {
         redisService.set(token,String.valueOf(userInfoPO.getUserId()),LoginConstants.UUID_EXPIRE_TIME);
         CookieUtil.setCookie(response, LoginConstants.COOKIE_TOKEN_NAME, token, LoginConstants.UUID_EXPIRE_TIME);
         CookieUtil.setCookie(response, LoginConstants.CLIENT_TOKEN_NAME, "pc-client", LoginConstants.UUID_EXPIRE_TIME);
-
+        UserBO userBO;
         return ResultModel.success(userInfoPO, "登录成功");
     }
 }
