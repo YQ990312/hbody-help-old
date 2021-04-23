@@ -29,7 +29,7 @@ public class ExpressDynaController {
     @Resource
     private ExpressDynaService expressDynaService;
 
-    @PostMapping("submit")
+    @PostMapping("/submit")
     public ResultModel submitOrder(HttpSession session, @RequestBody OrderSubmitRequest orderSubmitRequest){
         UserBO userBO=(UserBO)session.getAttribute(LoginConstants.LOGIN_USER);
         if(Objects.isNull(userBO)){
