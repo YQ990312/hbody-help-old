@@ -17,23 +17,25 @@ public class RedisService {
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
-    public StringRedisTemplate getStringRedisTemplate(){
+    public StringRedisTemplate getStringRedisTemplate() {
         return stringRedisTemplate;
     }
 
     /**
      * redis的添加String类型
+     *
      * @param key
      * @param value
      * @param timeOutSeconds
      * @param timeUnit
      */
-    public void set(final String key, final String value, final long timeOutSeconds, TimeUnit timeUnit){
-        stringRedisTemplate.opsForValue().set(key,value,timeOutSeconds,timeUnit);
+    public void set(final String key, final String value, final long timeOutSeconds, TimeUnit timeUnit) {
+        stringRedisTemplate.opsForValue().set(key, value, timeOutSeconds, timeUnit);
     }
 
     /**
      * 对象转json添加到redis中
+     *
      * @param key
      * @param value
      * @param timeOutSeconds
@@ -45,6 +47,7 @@ public class RedisService {
 
     /**
      * 按照秒级别设置时长添加到redis中
+     *
      * @param key
      * @param value
      * @param timeOutSeconds
@@ -55,6 +58,7 @@ public class RedisService {
 
     /**
      * 使用默认时长添加key和value
+     *
      * @param key
      * @param value
      */
@@ -64,6 +68,7 @@ public class RedisService {
 
     /**
      * 判断key和value是否存在，不存在则添加，存在则不改变
+     *
      * @param key
      * @param value
      * @return
@@ -74,6 +79,7 @@ public class RedisService {
 
     /**
      * 按照秒级别设置时长
+     *
      * @param key
      * @param timeOutSeconds
      */
@@ -83,6 +89,7 @@ public class RedisService {
 
     /**
      * 按照迷人时间设置对象（转json）
+     *
      * @param key
      * @param value
      */
@@ -92,6 +99,7 @@ public class RedisService {
 
     /**
      * 判断这个是否存在，存在就不改变，不存在就添加
+     *
      * @param key
      * @param value
      */
@@ -101,11 +109,21 @@ public class RedisService {
 
     /**
      * 获取一个String的值
+     *
      * @param key
      * @return
      */
     public String get(final String key) {
         return stringRedisTemplate.opsForValue().get(key);
+    }
+
+    /**
+     * 删除缓存中数据
+     *
+     * @param key
+     */
+    public void delete(String key) {
+        stringRedisTemplate.delete(key);
     }
 
 }

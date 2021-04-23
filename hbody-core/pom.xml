@@ -59,6 +59,13 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <!--其他三方包 end-->
+
+        <!--缓存 start -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <!--缓存 end -->
     </dependencies>
 
     <build>
