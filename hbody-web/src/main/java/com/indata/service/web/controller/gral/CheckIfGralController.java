@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author yangqi
@@ -50,6 +51,7 @@ public class CheckIfGralController {
         if(optionPOList !=null && optionPOList.isEmpty()){
             return ResultModel.fail(CommonErrorCodeEnum.NOT_EXSITS,"不存在");
         }
-        return ResultModel.success(optionPOList,"查询成功");
+        List<String> functions=optionPOList.stream().map(e->e.getConfigType()).collect(Collectors.toList());
+        return ResultModel.success(functions,"查询成功");
     }
 }
