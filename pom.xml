@@ -16,6 +16,7 @@
         <module>hbody-common</module>
         <module>hbody-core</module>
         <module>hbody-dal</module>
+        <module>hbody-config</module>
     </modules>
 
     <properties>
