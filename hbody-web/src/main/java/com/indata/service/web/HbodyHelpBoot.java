@@ -22,17 +22,17 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
         exclude = {
                 DataSourceAutoConfiguration.class
         })
-public class Bootstrap {
+public class HbodyHelpBoot {
 
-    private static final Logger logger = LoggerFactory.getLogger(Bootstrap.class);
+    private static final Logger logger = LoggerFactory.getLogger(HbodyHelpBoot.class);
 
     public static void main(String[] args) {
-        logger.info("============================= spring boot start begin =============================");
+        logger.info("============================= hbodyHelpBoot Spring boot start begin =============================");
         long start = System.currentTimeMillis();
-        SpringApplication.run(Bootstrap.class, args);
-        logger.info("============================= SpringApplication.run finished, cost = {} =============================", (System.currentTimeMillis() - start));
+        SpringApplication.run(HbodyHelpBoot.class, args);
+        logger.info("============================= hbodyHelpBoot.run finished, cost = {} =============================", (System.currentTimeMillis() - start));
         long cost = System.currentTimeMillis() - start;
-        logger.info("============================= spring boot start successful ! cost = {} =============================", cost);
+        logger.info("============================= hbodyHelpBoot Spring boot start successful ! cost = {} =============================", cost);
 
     }
 

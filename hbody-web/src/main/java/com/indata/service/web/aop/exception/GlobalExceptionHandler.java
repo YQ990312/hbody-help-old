@@ -15,6 +15,7 @@ import com.indata.service.common.exception.CommonException;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.common.util.JsonUtils;
 import com.indata.service.common.util.UUIDUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +47,11 @@ import java.util.Set;
  * @author yangqi
  * @date 2021/04/12
  */
+@Slf4j
 @Order(value = -1)
 @RestControllerAdvice
 @ResponseStatus(HttpStatus.OK)
 public class GlobalExceptionHandler {
-
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     private String getRequestId(HttpServletRequest request) {
         String requestId = UUIDUtils.generateUUID(16);
@@ -142,7 +142,7 @@ public class GlobalExceptionHandler {
             ret = StringUtils.removeEnd(strBuilder.toString(), separator) + ". ";
         }
         return ResultModel.fail(requestId, CommonErrorCodeEnum.REQUEST_PARAM_ERROR,
-                StringUtils.isNotBlank(ret) ? ret : "参数校验错误", e);
+                StringUtils.isNotBlank(ret) ? ret : e.getMessage(), e);
     }
 
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})

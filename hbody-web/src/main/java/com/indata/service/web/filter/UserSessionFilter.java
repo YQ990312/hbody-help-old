@@ -52,7 +52,7 @@ public class UserSessionFilter extends OncePerRequestFilter {
 
     @Override
     public void destroy() {
-        logger.info("过滤器销毁");
+        logger.info("=== hbodyHelp-init  过滤器销毁  ===");
     }
 
     /**

@@ -64,7 +64,7 @@ public enum CommonErrorCodeEnum {
     CS_STAFF_NOT_EXIST(421, "人工坐席不存在"),
     CHILD_ACCOUNT_NO_PERMISSION(425, "子账号无权限"),
 
-    UNKNOWN_ERROR(500, "未知错误"),
+    UNKNOWN_ERROR(500, "出问题了，请记录联系我们哦"),
     SERVER_POWER_LESS(501, "服务器无法完成该请求"),
     SERIALIZATION_ERROR(501, "服务器无法完成该请求"),
     RETRY_ERROR(502, "服务器重试出错"),

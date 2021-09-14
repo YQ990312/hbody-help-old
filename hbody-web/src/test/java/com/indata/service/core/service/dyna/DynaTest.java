@@ -4,7 +4,7 @@ import com.indata.service.core.vo.bo.UserBO;
 import com.indata.service.core.vo.request.OrderSubmitRequest;
 import com.indata.service.dal.dao.OrderInfoPOMapper;
 import com.indata.service.dal.entity.OrderInfoPO;
-import com.indata.service.web.Bootstrap;
+import com.indata.service.web.HbodyHelpBoot;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
  * @create 2021/4/22 17:02
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes= Bootstrap.class)
+@SpringBootTest(classes= HbodyHelpBoot.class)
 public class DynaTest {
 
     @Resource

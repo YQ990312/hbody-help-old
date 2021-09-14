@@ -38,11 +38,11 @@ public class UserLoginInterception implements HandlerInterceptor {
     /**
      * 未登入
      */
-    private static String UN_LOGIN_MSG = JsonUtils.object2String(ResultModel.fail(CommonErrorCodeEnum.USER_NOT_LOGIN));
+    private static final String UN_LOGIN_MSG = JsonUtils.object2String(ResultModel.fail(CommonErrorCodeEnum.USER_NOT_LOGIN));
     /**
      * 登入过期
      */
-    private static String NOT_EXIT_MSG = JsonUtils.object2String(ResultModel.fail(CommonErrorCodeEnum.ACCOUNT_NOT_EXSITS));
+    private static final String NOT_EXIT_MSG = JsonUtils.object2String(ResultModel.fail(CommonErrorCodeEnum.ACCOUNT_NOT_EXSITS));
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

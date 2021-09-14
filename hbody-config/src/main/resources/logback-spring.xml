@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod=" 5 seconds" debug="false">
+    <springProperty scope="context" name="logPath" source="hBody.logback.path"/>
+    <springProperty scope="context" name="logLevel" source="hBody.logback.level"/>
+
+    <property name="LOG_PATH" value="${logPath}"/>
+    <property name="LOG_LEVEL" value="${logLevel}"/>
+
+    <!-- FEEDS 日志输出格式 -->
+    <property name="OUTPUT_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{TraceId}] [%X{EagleEye-TraceID}] [%X{taskTrace}] [%boldYellow(%thread)] %highlight(%-5level) %boldGreen(%logger{15}) - %msg%n"/>
+
+    <!-- 框架日志输出格式-->
+    <property name="FW_OUTPUT_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{TraceId}] [%X{EagleEye-TraceID}] [%boldYellow(%thread)] %highlight(%-5level) %boldGreen(%logger{15}) - %msg%n"/>
+    <!--日志文件保留最大天数-->
+    <property name="MAXDAY" value="10"/>
+
+    <!--日志文件滚动阈值-->
+    <property name="MAXSIZE" value="512MB"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${OUTPUT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ALARM" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/alarm.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/alarm-%d{yyyy-MM-dd}-%i.log.gz
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAXSIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAXDAY}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${OUTPUT_PATTERN}</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="ROOT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/root.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/root-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>7</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FW_OUTPUT_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="TrackAppender" class="com.byai.saas.insight.appender.TrackAppender">
+        <AppName>by-wechat-work</AppName>
+        <Topic>by-wechat-work</Topic>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{tid}] [%X{TraceId}] [%X{EagleEye-TraceID}] [%thread] %-5level %logger{56} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <include resource="logback-alarm.xml"/>
+
+    <logger name="com.byai.bywechatwork" level="${LOG_LEVEL}"/>
+
+
+    <springProfile name="dev">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="ROOT"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="ROOT"/>
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="ROOT"/>
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ALARM"/>
+            <appender-ref ref="TrackAppender" />
+            <appender-ref ref="alarm" />
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="ROOT"/>
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ALARM"/>
+            <appender-ref ref="TrackAppender" />
+            <appender-ref ref="alarm" />
+        </root>
+    </springProfile>
+
+    <springProfile name="pre">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="ROOT"/>
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="ALARM"/>
+            <appender-ref ref="TrackAppender" />
+        </root>
+    </springProfile>
+
+
+    <springProfile name="solution">
+        <root level="${LOG_LEVEL}">
+            <appender-ref ref="ROOT"/>
+            <appender-ref ref="ALARM"/>
+            <appender-ref ref="alarm"/>
+        </root>
+    </springProfile>
+
+
+</configuration>

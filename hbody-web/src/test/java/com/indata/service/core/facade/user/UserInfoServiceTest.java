@@ -2,7 +2,7 @@ package com.indata.service.core.facade.user;
 
 import com.indata.service.core.service.user.UserInfoService;
 import com.indata.service.dal.entity.UserInfoPO;
-import com.indata.service.web.Bootstrap;
+import com.indata.service.web.HbodyHelpBoot;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @create 2021/4/16
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes= Bootstrap.class)
+@SpringBootTest(classes= HbodyHelpBoot.class)
 public class UserInfoServiceTest {
     @Resource
     private UserInfoService userInfoService;
