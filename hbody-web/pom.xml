@@ -95,12 +95,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!--redis end-->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.18</version>
         </dependency>
-        <!--redis end-->
     </dependencies>
 
     <build>
