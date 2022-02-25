@@ -16,17 +16,11 @@ import com.indata.service.common.model.ResultModel;
 import com.indata.service.common.util.JsonUtils;
 import com.indata.service.common.util.UUIDUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -36,10 +30,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import java.util.List;
-import java.util.Set;
 
 /**
  * 统一异常改善版
@@ -112,37 +102,6 @@ public class GlobalExceptionHandler {
         String requestId = getRequestId(request);
         log.error("参数类型或数量错误 requestId:{} ", requestId, e);
         return ResultModel.fail(requestId, CommonErrorCodeEnum.REQUEST_PARAM_ERROR, "参数类型或数量错误", e);
-    }
-
-    @ExceptionHandler(value = {ConstraintViolationException.class, MethodArgumentNotValidException.class})
-    public ResultModel constraintViolationException(Exception e, HttpServletRequest request) {
-        String requestId = getRequestId(request);
-        log.error("参数校验错误  requestId:{} ", requestId, e);
-        String ret = "";
-        if (e instanceof ConstraintViolationException) {
-            // 方法上的单参数校验错误处理
-            ConstraintViolationException exception = (ConstraintViolationException) e;
-            Set<ConstraintViolation<?>> violations = exception.getConstraintViolations();
-            String separator = "; ";
-            StringBuilder strBuilder = new StringBuilder();
-            for (ConstraintViolation<?> violation : violations) {
-                strBuilder.append(violation.getMessage()).append(separator);
-            }
-            ret = StringUtils.removeEnd(strBuilder.toString(), separator) + ". ";
-        } else if (e instanceof MethodArgumentNotValidException) {
-            // 对象参数校验错误
-            MethodArgumentNotValidException exception = (MethodArgumentNotValidException) e;
-            BindingResult bindingResult = exception.getBindingResult();
-            List<ObjectError> errorList = bindingResult.getAllErrors();
-            String separator = "; ";
-            StringBuilder strBuilder = new StringBuilder();
-            for (ObjectError error : errorList) {
-                strBuilder.append(error.getDefaultMessage()).append(separator);
-            }
-            ret = StringUtils.removeEnd(strBuilder.toString(), separator) + ". ";
-        }
-        return ResultModel.fail(requestId, CommonErrorCodeEnum.REQUEST_PARAM_ERROR,
-                StringUtils.isNotBlank(ret) ? ret : e.getMessage(), e);
     }
 
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})

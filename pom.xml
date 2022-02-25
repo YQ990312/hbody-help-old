@@ -29,22 +29,6 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <logback.version>1.2.3</logback.version>
-        <commons-lang3>3.6</commons-lang3>
-        <common-lang>2.6</common-lang>
-        <mysql>5.1.38</mysql>
-        <fasterxml>2.8.7</fasterxml>
-        <commons-io>2.0.1</commons-io>
-        <junit.version>4.12</junit.version>
-        <springframework.version>5.2.9.RELEASE</springframework.version>
-        <springboot.version>2.4.4</springboot.version>
-        <apache.common.text.version>1.1</apache.common.text.version>
-        <springframework.session.version>1.3.1.RELEASE</springframework.session.version>
-        <org.mybatis.spring.boot.version>1.3.2</org.mybatis.spring.boot.version>
-        <commons-fileupload.version>1.3.3</commons-fileupload.version>
-        <redis.clients.version>3.1.0</redis.clients.version>
-        <com.google.guava.version>29.0-jre</com.google.guava.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -81,54 +65,61 @@
             <!--springboot 引入依赖 start-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${springboot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <artifactId>spring-boot-starter</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
             </dependency>
             <!--springboot 引入依赖 end-->
 
             <!--spring 配置包 start-->
-
             <!--spring 配置包 end -->
 
             <!-- 其他三方宝 start-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>${commons-lang3}</version>
             </dependency>
-
             <dependency>
                 <groupId>commons-lang</groupId>
                 <artifactId>commons-lang</artifactId>
-                <version>${common-lang}</version>
+                <version>2.6</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-text</artifactId>
-                <version>${apache.common.text.version}</version>
-            </dependency>
             <!-- 其他三方宝 end-->
 
             <!--数据库 配置包 start-->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${org.mybatis.spring.boot.version}</version>
+                <version>1.3.2</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>1.1.10</version>
             </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>3.4.6</version>
+            </dependency>
             <!--数据库 配置包 end-->
             <!--文件上传下载 start-->
             <dependency>
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
-                <version>${commons-fileupload.version}</version>
+                <version>1.3.3</version>
             </dependency>
             <!--文件上传下载 end-->
             <!--redis start-->
@@ -137,7 +128,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>${com.google.guava.version}</version>
+                <version>29.0-jre</version>
             </dependency>
             <!--缓存 end -->
         </dependencies>
@@ -149,7 +140,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${springboot.version}</version>
                 <configuration>
                     <fork>true</fork>
                     <addResources>true</addResources>

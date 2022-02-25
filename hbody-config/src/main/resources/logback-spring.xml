@@ -1,132 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+    <!--如果需要启用颜色的话就需要包含这个配置文件
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    -->
 
-<configuration scan="true" scanPeriod=" 5 seconds" debug="false">
-    <springProperty scope="context" name="logPath" source="hBody.logback.path"/>
-    <springProperty scope="context" name="logLevel" source="hBody.logback.level"/>
+    <springProperty scop="context" name="appName" source="spring.application.name" defaultValue="hBodyHelp"/>
+    <springProperty scop="context" name="rootLevel" source="logback.level" defaultValue="INFO"/>
+    <springProperty scop="context" name="log.path" source="logback.dir" defaultValue="/data/logs/hBodyHelp"/>
 
-    <property name="LOG_PATH" value="${logPath}"/>
-    <property name="LOG_LEVEL" value="${logLevel}"/>
+    <property name="log.path" value="${log.path}" />
 
-    <!-- FEEDS 日志输出格式 -->
-    <property name="OUTPUT_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{TraceId}] [%X{EagleEye-TraceID}] [%X{taskTrace}] [%boldYellow(%thread)] %highlight(%-5level) %boldGreen(%logger{15}) - %msg%n"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} [%thread] [%logger{50}] - %msg%n"/>
 
-    <!-- 框架日志输出格式-->
-    <property name="FW_OUTPUT_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{TraceId}] [%X{EagleEye-TraceID}] [%boldYellow(%thread)] %highlight(%-5level) %boldGreen(%logger{15}) - %msg%n"/>
     <!--日志文件保留最大天数-->
     <property name="MAXDAY" value="10"/>
 
     <!--日志文件滚动阈值-->
     <property name="MAXSIZE" value="512MB"/>
 
+    <!-- 控制台打印日志的相关配置 -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 日志格式 -->
         <encoder>
-            <pattern>${OUTPUT_PATTERN}</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <appender name="ALARM" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_PATH}/alarm.log</File>
+    <!--debug级别日志输出器-->
+    <appender name="FILE-DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--记录的日志文件的路径及文件名-->
+        <file>${log.path}/debug.log</file>
+
+        <!--记录的日志级别-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <!--日志记录器的滚动策略，按日期，按大小记录-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/alarm-%d{yyyy-MM-dd}-%i.log.gz
-            </fileNamePattern>
+            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/debug-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${MAXSIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
             <maxHistory>${MAXDAY}</maxHistory>
         </rollingPolicy>
-        <encoder>
-            <pattern>${OUTPUT_PATTERN}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+    </appender>
+
+    <!--error级别日志输出器-->
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--记录的日志文件的路径及文件名-->
+        <file>${log.path}/error.log</file>
+
+        <!--记录的日志级别-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
+
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <!--日志记录器的滚动策略，按日期，按大小记录-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/alarm-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>${MAXSIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>${MAXDAY}</maxHistory>
+        </rollingPolicy>
     </appender>
 
-    <appender name="ROOT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>${LOG_PATH}/root.log</File>
+    <!--记录排除debug级别外的所有其他日志级别的日志输出器-->
+    <appender name="FILE-TOTAL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--记录的日志文件的路径及文件名-->
+        <file>${log.path}/root.log</file>
+
+        <!--记录的日志级别-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <!--日志记录器的滚动策略，按日期，按大小记录-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- rollover daily -->
-            <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/root-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+            <fileNamePattern>${log.path}/%d{yyyy-MM-dd}/root-%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
             <maxFileSize>100MB</maxFileSize>
             <maxHistory>7</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
-        <encoder>
-            <pattern>${FW_OUTPUT_PATTERN}</pattern>
-        </encoder>
     </appender>
 
-
-    <appender name="TrackAppender" class="com.byai.saas.insight.appender.TrackAppender">
-        <AppName>by-wechat-work</AppName>
-        <Topic>by-wechat-work</Topic>
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{tid}] [%X{TraceId}] [%X{EagleEye-TraceID}] [%thread] %-5level %logger{56} - %msg%n</pattern>
-        </encoder>
-    </appender>
-
-    <include resource="logback-alarm.xml"/>
-
-    <logger name="com.byai.bywechatwork" level="${LOG_LEVEL}"/>
-
-
-    <springProfile name="dev">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="ROOT"/>
+    <!--
+        log level:TRACE,DEBUG,INFO,WARN,ERROR,ALL,OFF
+        <appender-ref ref="FILE-INFO"/>
+    -->
+    <root level="${rootLevel}">
+        <springProfile name="local,dev,test,llh">
             <appender-ref ref="STDOUT"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="local">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="ROOT"/>
-            <appender-ref ref="STDOUT"/>
-        </root>
-    </springProfile>
-
-    <springProfile name="test">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="ROOT"/>
-            <appender-ref ref="STDOUT"/>
-            <appender-ref ref="ALARM"/>
-            <appender-ref ref="TrackAppender" />
-            <appender-ref ref="alarm" />
-        </root>
-    </springProfile>
-
-    <springProfile name="prod">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="ROOT"/>
-            <appender-ref ref="STDOUT"/>
-            <appender-ref ref="ALARM"/>
-            <appender-ref ref="TrackAppender" />
-            <appender-ref ref="alarm" />
-        </root>
-    </springProfile>
-
-    <springProfile name="pre">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="ROOT"/>
-            <appender-ref ref="STDOUT"/>
-            <appender-ref ref="ALARM"/>
-            <appender-ref ref="TrackAppender" />
-        </root>
-    </springProfile>
-
-
-    <springProfile name="solution">
-        <root level="${LOG_LEVEL}">
-            <appender-ref ref="ROOT"/>
-            <appender-ref ref="ALARM"/>
-            <appender-ref ref="alarm"/>
-        </root>
-    </springProfile>
-
-
+        </springProfile>
+        <springProfile name="local,dev,test,llh">
+            <appender-ref ref="FILE-DEBUG"/>
+        </springProfile>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-TOTAL"/>
+        <appender-ref ref="FILE-ERROR"/>
+    </root>
 </configuration>
