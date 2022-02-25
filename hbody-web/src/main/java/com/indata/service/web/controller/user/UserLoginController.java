@@ -7,7 +7,7 @@ import com.indata.service.common.util.CookieUtil;
 import com.indata.service.common.util.UUIDUtils;
 import com.indata.service.core.service.user.UserInfoService;
 import com.indata.service.core.tool.redis.RedisService;
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.core.vo.request.UserLoginRequest;
 import com.indata.service.dal.entity.UserInfoPO;
 import org.springframework.web.bind.annotation.PostMapping;

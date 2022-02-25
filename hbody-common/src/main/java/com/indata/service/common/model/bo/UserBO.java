@@ -1,4 +1,4 @@
-package com.indata.service.core.vo.bo;
+package com.indata.service.common.model.bo;
 
 import lombok.Data;
 

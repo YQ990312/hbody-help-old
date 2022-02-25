@@ -1,15 +1,16 @@
 package com.indata.service.web.aop.log;
 
 import com.indata.service.common.constant.CommonConfigConstant;
+import com.indata.service.common.context.WebContext;
+import com.indata.service.common.holder.ContextHolder;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.common.util.UUIDUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -23,12 +24,12 @@ import java.util.Arrays;
  * @author yangqi
  * @create 2021/4/13 17:33
  */
+@Slf4j
 @Aspect
 @Component
 @Order(1)
 public class ControllerLogAspect {
 
-    private final static Logger logger = LoggerFactory.getLogger(ControllerLogAspect.class);
 
     @Pointcut("@within(org.springframework.web.bind.annotation.RestController)")
     public void controller() {
@@ -53,26 +54,25 @@ public class ControllerLogAspect {
         String[] parameterNames = methodSign.getParameterNames();
         Object[] args = pig.getArgs();
         Object obj = null;
-        logger.info("【1】====start ====Request URI: {} method: {} ====start ====", requestUrI, method);
+        log.info("【1】====start ====Request URI: {} method: {} accountId:{} ====start ====", requestUrI, method, WebContext.getAccountId());
         long startTime = System.currentTimeMillis();
         try {
-            logger.info("【2】参数名称{}, 值{}.", Arrays.toString(parameterNames), Arrays.toString(args));
-            logger.info("【3】{}执行{}开始.", targetClassName, methodSignName);
+            log.info("【2】参数名称{}, 值{}", Arrays.toString(parameterNames), Arrays.toString(args));
+            log.info("【3】{}执行{}开始.", targetClassName, methodSignName);
             // 执行controller
             obj = pig.proceed();
         } catch (Throwable e) {
-            logger.error(" {}执行{}出错, 参数名称{}, 值{}.", targetClassName, methodSignName,
+            log.error(" {}执行{}出错, 参数名称{}, 值{}.", targetClassName, methodSignName,
                     Arrays.toString(parameterNames), Arrays.toString(args), e);
-            request.setAttribute(CommonConfigConstant.REQUEST_ID, requestId);
             throw e;
         } finally {
-            logger.info("【4】{}执行{}结束, 总耗时{}ms.====end ====", targetClassName, methodSignName, System.currentTimeMillis() - startTime);
+            log.info("【4】{}执行{}结束, 总耗时{}ms.====end ====", targetClassName, methodSignName, System.currentTimeMillis() - startTime);
             if (obj instanceof ResultModel) {
                 ResultModel resultModel = (ResultModel) obj;
                 resultModel.setRequestId(requestId);
             }
             MDC.remove(CommonConfigConstant.REQUEST_ID);
-//            ContextHolder.clean();
+            ContextHolder.clean();
         }
         return obj;
     }

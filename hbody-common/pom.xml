@@ -14,10 +14,6 @@
 
     <dependencies>
         <!--spring 配置start -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-        </dependency>
         <!--spring 配置end -->
 
         <!--其他三方表 start-->
@@ -55,21 +51,10 @@
         <!-- apache lang包配置 end-->
 
         <!--jackson start-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
+
         <!--jackson end-->
 
         <!--javaxservlet start-->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
@@ -88,31 +73,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <!--将mapper文件打包进去-->
-        <resources>
-
-            <resource>
-                <!--指定根目录 到源文件夹 一般如下-->
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.yaml</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-            <resource> <!--指定根目录 到源文件夹 一般如下-->
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.yml</include>
-                    <include>**/*.yaml</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-        </resources>
     </build>
 
 </project>

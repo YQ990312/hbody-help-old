@@ -5,7 +5,7 @@ import com.indata.service.common.enums.CommonErrorCodeEnum;
 import com.indata.service.common.exception.CommonException;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.core.service.dyna.ExpressDynaService;
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.core.vo.request.OrderSubmitRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,23 +1,21 @@
 package com.indata.service.web.intercepter;
 
-import com.indata.service.common.constant.LoginConstants;
+import com.indata.service.common.context.WebContext;
 import com.indata.service.common.enums.CommonErrorCodeEnum;
+import com.indata.service.common.holder.ContextHolder;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.common.util.JsonUtils;
 import com.indata.service.common.util.SessionUtil;
 import com.indata.service.core.facade.AccountFacade;
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.dal.entity.UserInfoPO;
-import com.indata.service.web.controller.HttpRequestHolders;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,11 +25,15 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 /**
  * @author yangqi
+ * 用户登入拦截器
+ * 拦截规则：
+ * 在session中查询accountId信息，如果没有失败（用户未登入）
+ * 查询到以后去单点服务中查询用户信息（所有信息）
+ * 最后保存打用户上下文中（WebContext）
  * @create 2021/4/13 14:10
  */
+@Slf4j
 public class UserLoginInterception implements HandlerInterceptor {
-
-    private final static Logger logger= LoggerFactory.getLogger(UserLoginInterception.class);
 
     @Resource
     private AccountFacade accountFacade;
@@ -47,37 +49,37 @@ public class UserLoginInterception implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Long accountId= SessionUtil.getAccountId(request);
-        logger.info("登入拦截器 login:accountId:{}",accountId);
+        log.info("登入拦截器 login:accountId:{}",accountId);
         if (accountId < 0) {
             String token = SessionUtil.getUUid(request);
-            logger.info("用户未登录,或者已过期,url:{}, param:{}, token:{}",
+            log.info("用户未登录,或者已过期,url:{}, param:{}, token:{}",
                     request.getRequestURL(), getParamString(request), token);
             writeOutJson(response, UN_LOGIN_MSG);
             return false;
         }
-        //没有单点登入服务，这里塞一个session,提供业务需求使用
+        //todo 没有单点登入服务，这里塞一个session,提供业务需求使用，后续补充单点服务
         UserInfoPO newUserPO = accountFacade.getUserByAccountId(accountId);
         if (null == newUserPO) {
-            logger.info("用户不存在，可能被删除,url:{}, param:{}, accountId:{}",
+            log.info("用户不存在，可能被删除,url:{}, param:{}, accountId:{}",
                     request.getRequestURL(), getParamString(request), accountId);
             writeOutJson(response, NOT_EXIT_MSG);
             return false;
         }
         UserBO newUserBO = accountFacade.toUserBO(newUserPO);
         if (null == newUserBO) {
-            logger.info("interceptor to userBO fail, url:{}, accountId:{}",
+            log.info("interceptor to userBO fail, url:{}, accountId:{}",
                     request.getRequestURL(), accountId);
             return false;
         }
-        HttpSession session = request.getSession();
-        session.setAttribute(LoginConstants.LOGIN_USER, newUserBO);
-        HttpRequestHolders.setHttpServletRequest(request);
+        WebContext.putAccountId(accountId);
+        WebContext.putUserInfoBo(newUserBO);
+        WebContext.putCompanyId(newUserBO.getUserSchoolId());
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
+        ContextHolder.clean();
     }
 
     @Override
@@ -113,13 +115,13 @@ public class UserLoginInterception implements HandlerInterceptor {
             }
             return sb.toString();
         } catch (IOException e) {
-            logger.warn("user login interceptor get param string from request body throw ex:", e);
+            log.warn("user login interceptor get param string from request body throw ex:", e);
         }finally {
             if (null != bufferedReader) {
                 try {
                     bufferedReader.close();
                 } catch (IOException e) {
-                    logger.warn("user login interceptor close reader throw ex:", e);
+                    log.warn("user login interceptor close reader throw ex:", e);
                 }
             }
         }

@@ -1,12 +1,10 @@
 package com.indata.service.core.facade;
 
 import com.indata.service.core.service.user.UserInfoService;
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.dal.entity.UserInfoPO;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

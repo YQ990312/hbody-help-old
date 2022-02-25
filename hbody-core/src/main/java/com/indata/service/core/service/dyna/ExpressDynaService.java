@@ -1,6 +1,6 @@
 package com.indata.service.core.service.dyna;
 
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.core.vo.request.OrderSubmitRequest;
 
 /**

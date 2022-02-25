@@ -4,7 +4,7 @@ import com.indata.service.common.constant.LoginConstants;
 import com.indata.service.common.enums.CommonErrorCodeEnum;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.core.service.gray.EnumConfigService;
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.dal.entity.EnumConfigOptionPO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

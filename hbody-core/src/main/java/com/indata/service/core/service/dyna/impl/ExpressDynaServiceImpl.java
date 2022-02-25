@@ -1,7 +1,7 @@
 package com.indata.service.core.service.dyna.impl;
 
 import com.indata.service.core.service.dyna.ExpressDynaService;
-import com.indata.service.core.vo.bo.UserBO;
+import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.core.vo.request.OrderSubmitRequest;
 import com.indata.service.dal.dao.OrderInfoPOMapper;
 import com.indata.service.dal.entity.OrderInfoPO;
