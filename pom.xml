@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.4</version>
+        <relativePath/>
+    </parent>
+
     <groupId>com.hbody-help</groupId>
     <artifactId>hbody-help</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <name>hbody-help</name>
     <description>hbody help project for springboot</description>
 
@@ -36,6 +44,9 @@
         <commons-fileupload.version>1.3.3</commons-fileupload.version>
         <redis.clients.version>3.1.0</redis.clients.version>
         <com.google.guava.version>29.0-jre</com.google.guava.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencyManagement>
@@ -61,6 +72,11 @@
                 <artifactId>hbody-web</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.hbody-help</groupId>
+                <artifactId>hbody-config</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
             <!--内部引用 end -->
             <!--springboot 引入依赖 start-->
             <dependency>
@@ -73,11 +89,7 @@
             <!--springboot 引入依赖 end-->
 
             <!--spring 配置包 start-->
-            <dependency>
-                <groupId>org.springframework.session</groupId>
-                <artifactId>spring-session</artifactId>
-                <version>${springframework.session.version}</version>
-            </dependency>
+
             <!--spring 配置包 end -->
 
             <!-- 其他三方宝 start-->
@@ -131,13 +143,43 @@
         </dependencies>
     </dependencyManagement>
 
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${springboot.version}</version>
+                <configuration>
+                    <fork>true</fork>
+                    <addResources>true</addResources>
+                </configuration>
             </plugin>
         </plugins>
+        <!--将mapper文件打包进去-->
+        <resources>
+
+            <resource>
+                <!--指定根目录 到源文件夹 一般如下-->
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.yaml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource> <!--指定根目录 到源文件夹 一般如下-->
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>**/*.yaml</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.properties</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+        </resources>
     </build>
 </project>
