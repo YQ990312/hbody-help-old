@@ -1,4 +1,4 @@
-package com.indata.service.core.facade.user;
+package com.indata.service.facade.user;
 
 import com.indata.service.dal.entity.UserInfoPO;
 import org.junit.Test;

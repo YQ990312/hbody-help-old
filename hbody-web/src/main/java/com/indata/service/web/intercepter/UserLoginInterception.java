@@ -6,7 +6,7 @@ import com.indata.service.common.holder.ContextHolder;
 import com.indata.service.common.model.ResultModel;
 import com.indata.service.common.util.JsonUtils;
 import com.indata.service.common.util.SessionUtil;
-import com.indata.service.core.facade.AccountFacade;
+import com.indata.service.facade.AccountFacade;
 import com.indata.service.common.model.bo.UserBO;
 import com.indata.service.dal.entity.UserInfoPO;
 import lombok.extern.slf4j.Slf4j;

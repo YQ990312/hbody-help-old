@@ -1,4 +1,4 @@
-package com.indata.service.core.facade;
+package com.indata.service.facade;
 
 import com.indata.service.core.service.user.UserInfoService;
 import com.indata.service.common.model.bo.UserBO;
